@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
       console.log("Revalidate-product...", path);
       // Use Nitro's ISR set function to trigger revalidation
       const response = await $fetch(path, {
-        method: "GET", // Perform a HEAD request to trigger the ISR revalidation
+        method: "HEAD", // Perform a HEAD request to trigger the ISR revalidation
         // method: "PURGE", // Nitro's built-in ISR PURGE method to regenerate page
         headers: {
           "x-nitro-prerender": "1", // Ensure ISR is triggered

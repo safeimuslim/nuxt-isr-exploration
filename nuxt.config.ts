@@ -1,12 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // routeRules: {
-  //   "/product/**": { swr: 3600 }, //  seconds
-  // },
+  routeRules: {
+    "/product/**": { swr: 3600 }, //  seconds
+  },
   nitro: {
-    prerender: {
-      routes: ["/product/:id"], // Dynamic product page route
-    },
+    // prerender: {
+    //   routes: ["/product/:id"], // Dynamic product page route
+    // },
     //   prerender: {
     //     crawlLinks: false,
     //     // routes: ["/product/:id"], // Dynamic product page route
