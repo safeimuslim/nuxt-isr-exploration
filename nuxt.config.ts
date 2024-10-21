@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   routeRules: {
     "/product/**": { swr: 3600 }, //  seconds
   },
-  nitro: {
+  // nitro: {
     // prerender: {
     //   routes: ["/product/:id"], // Dynamic product page route
     // },
@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     // routeRules: {
     //   "/product/**": { swr: 3600 }, //  seconds
     // },
-  },
+  // },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
 });
