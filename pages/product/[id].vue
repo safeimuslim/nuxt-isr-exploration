@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1>{{ product.name }}</h1>
-    <p>Price: ${{ product.price }}</p>
+    <h1>Jual {{ product.name }} | Bestfoless</h1>
+    <p>Price: Rp {{ product.price }}</p>
     <p>Quantity: {{ product.quantity }}</p>
     <p>Date: {{ product.date }}</p>
     <br />
     <p>Generation timestamp: {{ generatedUtcTime }}</p>
     <p>Generated seconds ago: {{ secondsAgo }}</p>
-    <button @click="clearCache">REFRESH</button>
+    <button @click="clearCache">REFRESH CSR</button>
   </div>
 </template>
 

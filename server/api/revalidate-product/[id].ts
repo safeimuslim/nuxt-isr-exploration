@@ -1,22 +1,38 @@
 // server/api/revalidate-product/[id].ts
 export default defineEventHandler(async (event) => {
   const id = event.context.params.id;
-  const path = `/product/${id}`
-    try {
-      console.log("Revalidate-product...", path);
-      // Use Nitro's ISR set function to trigger revalidation
-      const response = await $fetch(path, {
-        method: "HEAD", // Perform a HEAD request to trigger the ISR revalidation
-        // method: "PURGE", // Nitro's built-in ISR PURGE method to regenerate page
-        headers: {
-          "x-nitro-prerender": "1", // Ensure ISR is triggered
-        },
-      });
+  try {
+    const pathCacheProduct = `cache:product-cache:_`;
+    const cacheStorage = useStorage(pathCacheProduct);
+    const cachedKeys = await cacheStorage.getKeys();
 
-      console.log("Response >> ", response);
+    const filteredCchedKeys = cachedKeys.filter(
+      (keyFullpath) => keyFullpath.split(".")[0] === `product${id}`
+    );
 
-      return { status: 200, message: `Success: Product page ${id} revalidated.` };
-    } catch (error) {
-      return { status: 500, message: `Failed: Product page ${id} revalidated.` };
+    console.log("filteredCchedKeys >> ", filteredCchedKeys);
+
+    if (!filteredCchedKeys.length) {
+      return {
+        status: 200,
+        message: `Cache product page ${id} not found.`,
+      };
     }
+
+    await Promise.all(
+      filteredCchedKeys.map((key) => cacheStorage.removeItem(key))
+    );
+
+    //TODO: hit product URL here to trigger generate product cache
+    //TODO: move cache to the file system, becase if restart the server, cache will be lost.
+    return {
+      status: 200,
+      message: `Success revalidated product page ${id} revalidated.`,
+    };
+  } catch (error) {
+    return {
+      status: 200,
+      message: `Failed revalidated product page ${id} revalidated. ${error}`,
+    };
+  }
 });
